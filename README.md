@@ -8,4 +8,4 @@ JDK Version: 1.8
 
 ### Java
 
-- [基础语法](/java/base/)
+- [基础](/java/base/)
