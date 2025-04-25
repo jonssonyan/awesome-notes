@@ -25,7 +25,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class Collection {
+public class JavaCollection {
     public static void main(String[] args) {
         // List接口 - 有序集合，允许重复元素
 

@@ -1,6 +1,6 @@
 package com.jonssonyan;
 
-public class Basic {
+public class JavaBasic {
     public static void main(String[] args) {
         // 输出语句
         System.out.println("Hello World");  // 打印并换行

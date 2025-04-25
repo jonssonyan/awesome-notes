@@ -1,18 +1,18 @@
 package com.jonssonyan;
 
-public class OOP {
+public class JavaOOP {
     // 成员变量(字段)
     private String name;
     private int age;
     public static int count = 0; // 静态变量
 
     // 构造方法
-    public OOP() {
+    public JavaOOP() {
         // 默认构造方法
         count++;
     }
 
-    public OOP(String name, int age) {
+    public JavaOOP(String name, int age) {
         this.name = name;
         this.age = age;
         count++;
@@ -58,14 +58,14 @@ public class OOP {
     // 重写Object类的方法
     @Override
     public String toString() {
-        return "OOP[name=" + name + ", age=" + age + "]";
+        return "JavaOOP[name=" + name + ", age=" + age + "]";
     }
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
-        OOP other = (OOP) obj;
+        JavaOOP other = (JavaOOP) obj;
         return age == other.age && (name == null ? other.name == null : name.equals(other.name));
     }
 
