@@ -8,212 +8,247 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.Properties;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class JavaCollection {
     public static void main(String[] args) {
-        // List接口 - 有序集合，允许重复元素
+        // ================ List接口 - 有序集合，允许重复元素 ================
 
-        // ArrayList - 基于动态数组的实现
+        // ArrayList - 基于动态数组的实现，随机访问快，插入删除慢
         List<String> arrayList = new ArrayList<>();
         arrayList.add("Apple");
         arrayList.add("Banana");
         arrayList.add("Cherry");
         arrayList.add("Apple"); // 允许重复
-        System.out.println(arrayList.get(1)); // 索引访问
+        System.out.println("ArrayList访问示例: " + arrayList.get(1)); // 索引访问
         arrayList.remove(0); // 移除元素
         arrayList.set(0, "Blueberry"); // 修改元素
 
-        // 遍历List
-        for (String fruit : arrayList) {
-            System.out.println(fruit);
-        }
-
-        // LinkedList - 基于双向链表的实现
+        // LinkedList - 基于双向链表的实现，随机访问慢，插入删除快
         LinkedList<String> linkedList = new LinkedList<>();
         linkedList.add("Dog");
         linkedList.add("Cat");
-        linkedList.addFirst("Lion"); // 在头部添加
-        linkedList.addLast("Tiger"); // 在尾部添加
-        linkedList.removeFirst(); // 移除头部
-        linkedList.removeLast(); // 移除尾部
+        linkedList.addFirst("Lion"); // 在开头添加
+        linkedList.addLast("Tiger"); // 在末尾添加
+        linkedList.removeFirst(); // 移除开头
+        linkedList.removeLast(); // 移除末尾
 
-        // Vector - 线程安全的动态数组
+        // Vector - 线程安全的ArrayList
         Vector<String> vector = new Vector<>();
-        vector.add("One");
-        vector.add("Two");
+        vector.add("Red");
+        vector.add("Green");
+        vector.add("Blue");
 
-        // Stack - 后进先出(LIFO)栈
+        // Stack - Vector的子类，实现LIFO堆栈
         Stack<String> stack = new Stack<>();
-        stack.push("First"); // 压栈
+        stack.push("First");
         stack.push("Second");
-        stack.push("Third");
-        System.out.println(stack.pop()); // 弹栈 - Third
-        System.out.println(stack.peek()); // 查看栈顶 - Second
+        System.out.println("Stack顶部: " + stack.peek());
+        String popped = stack.pop(); // 返回并移除顶部
 
-        // Set接口 - 不允许重复元素
+        // ================ Set接口 - 不允许重复元素 ================
 
-        // HashSet - 基于哈希表的实现，无序
+        // HashSet - 基于哈希表实现，无序
         Set<String> hashSet = new HashSet<>();
         hashSet.add("Apple");
         hashSet.add("Banana");
-        hashSet.add("Cherry");
-        hashSet.add("Apple"); // 重复元素不会被添加
-        System.out.println(hashSet.size()); // 输出3
+        hashSet.add("Apple"); // 被忽略，不允许重复
+        System.out.println("HashSet大小: " + hashSet.size()); // 只有2个元素
 
-        // LinkedHashSet - 保持插入顺序的HashSet
+        // LinkedHashSet - 基于链表和哈希表实现，保持插入顺序
         Set<String> linkedHashSet = new LinkedHashSet<>();
         linkedHashSet.add("One");
         linkedHashSet.add("Two");
         linkedHashSet.add("Three");
 
-        // TreeSet - 有序Set，基于红黑树
+        // TreeSet - 基于红黑树实现，有序集合
         TreeSet<String> treeSet = new TreeSet<>();
-        treeSet.add("Banana");
-        treeSet.add("Apple");
-        treeSet.add("Cherry");
-        // 自然排序: Apple, Banana, Cherry
-        System.out.println(treeSet.first()); // 最小元素 - Apple
-        System.out.println(treeSet.last()); // 最大元素 - Cherry
+        treeSet.add("Zebra");
+        treeSet.add("Ant");
+        treeSet.add("Dog");
+        System.out.println("TreeSet首个元素: " + treeSet.first()); // 按字母排序，输出Ant
 
-        // 自定义排序的TreeSet
-        TreeSet<Person> personSet = new TreeSet<>((p1, p2) -> p1.getAge() - p2.getAge());
-        personSet.add(new Person("Alice", 30));
-        personSet.add(new Person("Bob", 25));
+        // ================ Map接口 - 键值对映射 ================
 
-        // Queue接口 - 队列
+        // HashMap - 基于哈希表实现，无序
+        Map<Integer, String> hashMap = new HashMap<>();
+        hashMap.put(1, "One");
+        hashMap.put(2, "Two");
+        hashMap.put(3, "Three");
+        System.out.println("HashMap值: " + hashMap.get(2));
+        hashMap.remove(1); // 移除键为1的项
 
-        // LinkedList实现Queue
-        Queue<String> queue = new LinkedList<>();
-        queue.offer("First"); // 添加元素
-        queue.offer("Second");
-        System.out.println(queue.peek()); // 查看队头 - First
-        System.out.println(queue.poll()); // 移除并返回队头 - First
-
-        // PriorityQueue - 优先级队列
-        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>();
-        priorityQueue.offer(5);
-        priorityQueue.offer(2);
-        priorityQueue.offer(8);
-        System.out.println(priorityQueue.poll()); // 输出最小值2
-
-        // Deque接口 - 双端队列
-        Deque<String> deque = new ArrayDeque<>();
-        deque.offerFirst("First");
-        deque.offerLast("Last");
-        System.out.println(deque.peekFirst()); // First
-        System.out.println(deque.peekLast()); // Last
-
-        // Map接口 - 键值对映射
-
-        // HashMap - 基于哈希表的实现
-        Map<String, Integer> hashMap = new HashMap<>();
-        hashMap.put("Alice", 25);
-        hashMap.put("Bob", 30);
-        hashMap.put("Charlie", 35);
-        System.out.println(hashMap.get("Bob")); // 30
-        hashMap.remove("Alice"); // 移除键值对
-
-        // 遍历Map
-        for (Map.Entry<String, Integer> entry : hashMap.entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue());
-        }
-
-        // LinkedHashMap - 保持插入顺序的HashMap
+        // LinkedHashMap - 基于链表和哈希表实现，保持插入顺序
         Map<String, Integer> linkedHashMap = new LinkedHashMap<>();
         linkedHashMap.put("One", 1);
         linkedHashMap.put("Two", 2);
         linkedHashMap.put("Three", 3);
 
-        // TreeMap - 有序Map，基于红黑树
-        TreeMap<String, Integer> treeMap = new TreeMap<>();
-        treeMap.put("Banana", 2);
-        treeMap.put("Apple", 1);
-        treeMap.put("Cherry", 3);
-        // 按键排序: Apple, Banana, Cherry
-        System.out.println(treeMap.firstKey()); // Apple
-        System.out.println(treeMap.lastKey()); // Cherry
+        // TreeMap - 基于红黑树实现，按键排序
+        TreeMap<String, Double> treeMap = new TreeMap<>();
+        treeMap.put("C", 3.0);
+        treeMap.put("A", 1.0);
+        treeMap.put("B", 2.0);
+        System.out.println("TreeMap首个键: " + treeMap.firstKey()); // 输出A
 
-        // Hashtable - 线程安全的哈希表
+        // Hashtable - 线程安全的HashMap
         Hashtable<String, Integer> hashtable = new Hashtable<>();
-        hashtable.put("One", 1);
-        hashtable.put("Two", 2);
+        hashtable.put("A", 1);
+        hashtable.put("B", 2);
 
-        // 并发集合
+        // Properties - Hashtable的子类，用于处理属性文件
+        Properties properties = new Properties();
+        properties.setProperty("username", "admin");
+        properties.setProperty("password", "123456");
+        System.out.println("属性: " + properties.getProperty("username"));
+
+        // ================ Queue接口 - 队列，通常FIFO ================
+
+        // LinkedList实现Queue
+        Queue<String> queue = new LinkedList<>();
+        queue.offer("First"); // 添加元素
+        queue.offer("Second");
+        System.out.println("队首: " + queue.peek()); // 查看队首
+        String polled = queue.poll(); // 返回并移除队首
+
+        // PriorityQueue - 基于优先级堆的实现
+        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>();
+        priorityQueue.offer(5);
+        priorityQueue.offer(1);
+        priorityQueue.offer(3);
+        System.out.println("优先队列首个元素: " + priorityQueue.peek()); // 输出1（最小值）
+
+        // ================ Deque接口 - 双端队列 ================
+
+        // ArrayDeque - 基于动态数组的双端队列
+        Deque<String> arrayDeque = new ArrayDeque<>();
+        arrayDeque.offerFirst("First");
+        arrayDeque.offerLast("Last");
+        System.out.println("第一个: " + arrayDeque.peekFirst());
+        System.out.println("最后一个: " + arrayDeque.peekLast());
+
+        // ================ 并发集合 - 线程安全的集合 ================
 
         // ConcurrentHashMap - 线程安全的HashMap
-        ConcurrentHashMap<String, Integer> concurrentHashMap = new ConcurrentHashMap<>();
-        concurrentHashMap.put("A", 1);
-        concurrentHashMap.put("B", 2);
+        ConcurrentMap<String, Integer> concurrentMap = new ConcurrentHashMap<>();
+        concurrentMap.put("One", 1);
+        concurrentMap.put("Two", 2);
 
-        // CopyOnWriteArrayList - 适用于读多写少的场景
+        // CopyOnWriteArrayList - 线程安全的ArrayList
         CopyOnWriteArrayList<String> copyOnWriteList = new CopyOnWriteArrayList<>();
-        copyOnWriteList.add("Item 1");
-        copyOnWriteList.add("Item 2");
+        copyOnWriteList.add("Safe");
+        copyOnWriteList.add("Thread");
 
-        // 阻塞队列
-        BlockingQueue<String> blockingQueue = new ArrayBlockingQueue<>(10);
+        // CopyOnWriteArraySet - 线程安全的Set
+        CopyOnWriteArraySet<String> copyOnWriteSet = new CopyOnWriteArraySet<>();
+        copyOnWriteSet.add("Safe");
+        copyOnWriteSet.add("Thread");
+
+        // ConcurrentLinkedQueue - 线程安全的队列
+        ConcurrentLinkedQueue<String> concurrentQueue = new ConcurrentLinkedQueue<>();
+        concurrentQueue.offer("Safe");
+        concurrentQueue.offer("Thread");
+
+        // BlockingQueue接口 - 支持阻塞操作的队列
+        BlockingQueue<String> blockingQueue = new LinkedBlockingQueue<>();
         try {
-            blockingQueue.put("Task");
-            String task = blockingQueue.take();
+            blockingQueue.put("Element"); // 如果队列满，会阻塞
+            String element = blockingQueue.take(); // 如果队列空，会阻塞
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        // 工具类
+        // ================ 遍历集合的方式 ================
+
+        // 1. 增强for循环
+        System.out.println("\n增强for循环:");
+        for (String item : arrayList) {
+            System.out.println(item);
+        }
+
+        // 2. 迭代器
+        System.out.println("\n迭代器:");
+        Iterator<String> iterator = linkedList.iterator();
+        while (iterator.hasNext()) {
+            String item = iterator.next();
+            System.out.println(item);
+            // iterator.remove(); // 安全删除当前元素
+        }
+
+        // 3. forEach方法(Java 8)
+        System.out.println("\nforEach方法:");
+        hashSet.forEach(item -> System.out.println(item));
+
+        // 4. Map遍历
+        System.out.println("\nMap遍历:");
+        // 4.1 键值对遍历
+        for (Map.Entry<Integer, String> entry : hashMap.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+        // 4.2 键遍历
+        for (Integer key : hashMap.keySet()) {
+            System.out.println("Key: " + key);
+        }
+        // 4.3 值遍历
+        for (String value : hashMap.values()) {
+            System.out.println("Value: " + value);
+        }
+
+        // ================ 集合工具类 ================
 
         // Collections - 集合工具类
-        List<Integer> numbers = new ArrayList<>();
-        numbers.add(3);
-        numbers.add(1);
-        numbers.add(5);
-        Collections.sort(numbers); // 排序
-        Collections.reverse(numbers); // 反转
-        Collections.shuffle(numbers); // 洗牌
-        int max = Collections.max(numbers); // 最大值
-        int min = Collections.min(numbers); // 最小值
+        List<String> list = new ArrayList<>();
+        list.add("C");
+        list.add("A");
+        list.add("B");
 
-        // 不可修改的集合
-        List<String> immutableList = Collections.unmodifiableList(arrayList);
+        Collections.sort(list); // 排序
+        Collections.reverse(list); // 反转
+        Collections.shuffle(list); // 随机排序
+        String max = Collections.max(list); // 最大值
+        String min = Collections.min(list); // 最小值
+        Collections.fill(list, "X"); // 填充
 
-        // Arrays - 数组工具类
-        int[] intArray = {5, 2, 8, 1, 9};
-        Arrays.sort(intArray); // 排序
-        int index = Arrays.binarySearch(intArray, 5); // 二分查找
-        List<Integer> asList = Arrays.asList(1, 2, 3); // 转换为List
-    }
+        // 创建不可修改的集合
+        List<String> unmodifiableList = Collections.unmodifiableList(new ArrayList<>());
+        Set<String> unmodifiableSet = Collections.unmodifiableSet(new HashSet<>());
+        Map<String, String> unmodifiableMap = Collections.unmodifiableMap(new HashMap<>());
 
-    // 用于示例的Person类
-    static class Person {
-        private String name;
-        private int age;
+        // 创建同步集合
+        List<String> synchronizedList = Collections.synchronizedList(new ArrayList<>());
+        Set<String> synchronizedSet = Collections.synchronizedSet(new HashSet<>());
+        Map<String, String> synchronizedMap = Collections.synchronizedMap(new HashMap<>());
 
-        public Person(String name, int age) {
-            this.name = name;
-            this.age = age;
-        }
+        // Arrays工具类
+        String[] array = {"Apple", "Banana", "Cherry"};
+        List<String> arrayAsList = Arrays.asList(array); // 数组转List(固定大小)
 
-        public String getName() {
-            return name;
-        }
-
-        public int getAge() {
-            return age;
-        }
+        // Java 8 Stream API
+        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+        int sum = numbers.stream()
+                .filter(n -> n % 2 == 0) // 过滤
+                .mapToInt(Integer::intValue) // 转换
+                .sum(); // 求和
+        System.out.println("\nStream API求和: " + sum);
     }
 }
