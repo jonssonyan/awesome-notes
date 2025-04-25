@@ -8,5 +8,6 @@
 - [多线程](src/main/java/com/jonssonyan/JavaThread.java)
 - [异常处理](src/main/java/com/jonssonyan/JavaException.java)
 - [注解](src/main/java/com/jonssonyan/JavaAnnotation.java)
+- [泛型](src/main/java/com/jonssonyan/JavaGenerics.java)
 - [反射](src/main/java/com/jonssonyan/JavaReflection.java)
 - [网络编程](src/main/java/com/jonssonyan/JavaNet.java)
